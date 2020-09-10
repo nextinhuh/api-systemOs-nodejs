@@ -1,10 +1,16 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export default class CreateUsers1598807107838 implements MigrationInterface {
+export default class CreateEmployees1599671320302
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'employees',
         columns: [
           {
             name: 'id',
@@ -14,17 +20,16 @@ export default class CreateUsers1598807107838 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
+            name: 'sector',
             type: 'varchar',
           },
           {
-            name: 'email',
+            name: 'position',
             type: 'varchar',
-            isUnique: true,
           },
           {
-            name: 'password',
-            type: 'varchar',
+            name: 'person_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -39,9 +44,19 @@ export default class CreateUsers1598807107838 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'employees',
+      new TableForeignKey({
+        columnNames: ['person_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'persons',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('employees');
   }
 }

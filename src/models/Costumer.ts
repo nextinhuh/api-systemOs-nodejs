@@ -7,30 +7,29 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import Person from './Person';
+import OrderService from './OrderService';
 
-@Entity('users')
-class User {
+@Entity('costumers')
+class Costumer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  login: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  privilege: string;
+  sector: string;
 
   @Column()
   person_id: string;
 
-  @OneToOne(() => Person, person => person.user)
+  @OneToOne(() => Person, person => person.costumer)
   @JoinColumn({ name: 'person_id' })
   person: Person;
+
+  @OneToMany(() => OrderService, orderService => orderService.costumer)
+  orderService: OrderService;
 
   @CreateDateColumn()
   created_at: Date;
@@ -39,4 +38,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Costumer;

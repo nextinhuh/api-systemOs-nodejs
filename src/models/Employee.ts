@@ -5,26 +5,29 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 
-import User from './User';
+import Person from './Person';
 
-@Entity('appointments')
-class Appointment {
+@Entity('employees')
+class Employee {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  provider_id: string;
+  sector: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'provider_id' })
-  provider: User;
+  @Column()
+  position: string;
 
-  @Column('timestamp with time zone')
-  date: Date;
+  @Column()
+  person_id: string;
+
+  @OneToOne(() => Person, person => person.employee)
+  @JoinColumn({ name: 'person_id' })
+  person: Person;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +36,4 @@ class Appointment {
   updated_at: Date;
 }
 
-export default Appointment;
+export default Employee;

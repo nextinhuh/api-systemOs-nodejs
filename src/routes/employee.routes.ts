@@ -5,9 +5,9 @@ import EditEmployeeService from '../services/EditEmployeeService';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
-const usersRouter = Router();
+const employeeRouter = Router();
 
-usersRouter.post('/', async (request, response) => {
+employeeRouter.post('/', async (request, response) => {
   const { name, email, password, login, position, sector } = request.body;
 
   const createUser = new CreateEmployeeService();
@@ -21,12 +21,10 @@ usersRouter.post('/', async (request, response) => {
     sector,
   });
 
-  delete employee.password;
-
   return response.json(employee);
 });
 
-usersRouter.put('/', async (request, response) => {
+employeeRouter.put('/', ensureAuthenticated, async (request, response) => {
   const { name, password, position, sector, id, privilege } = request.body;
 
   const editEmploye = new EditEmployeeService();
@@ -40,17 +38,7 @@ usersRouter.put('/', async (request, response) => {
     privilege,
   });
 
-  delete employee.password;
-
   return response.json(employee);
 });
 
-/*
-usersRouter.patch(
-  '/avatar',
-  ensureAuthenticated,
-  async (request, response) => {},
-); // patch é parecido com  "PUT", a diferença é que é usado para alterações pequenas, de apenas 1 campo
-*/
-
-export default usersRouter;
+export default employeeRouter;

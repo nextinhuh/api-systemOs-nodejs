@@ -3,7 +3,7 @@ import { Router } from 'express';
 import CreateCostumerService from '../services/CreateCostumerService';
 import EditCostumerService from '../services/EditCostumerService';
 
-// import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const costumerRouter = Router();
 
@@ -20,12 +20,10 @@ costumerRouter.post('/', async (request, response) => {
     login,
   });
 
-  delete costumer.password;
-
   return response.json(costumer);
 });
 
-costumerRouter.put('/', async (request, response) => {
+costumerRouter.put('/', ensureAuthenticated, async (request, response) => {
   const { name, password, sector, id, privilege } = request.body;
 
   const editCostumer = new EditCostumerService();
@@ -38,16 +36,7 @@ costumerRouter.put('/', async (request, response) => {
     privilege,
   });
 
-  delete costumer.password;
-
   return response.json(costumer);
 });
 
-/*
-usersRouter.patch(
-  '/avatar',
-  ensureAuthenticated,
-  async (request, response) => {},
-); // patch é parecido com  "PUT", a diferença é que é usado para alterações pequenas, de apenas 1 campo
-*/
 export default costumerRouter;

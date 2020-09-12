@@ -9,7 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Costumer from './Costumer';
+import Person from './Person';
 
 @Entity('orderservice')
 class OrderService {
@@ -20,7 +20,7 @@ class OrderService {
   sector: string;
 
   @Column()
-  date: string;
+  date: Date;
 
   @Column()
   description: string;
@@ -32,11 +32,11 @@ class OrderService {
   status: string;
 
   @Column()
-  costumer_id: string;
+  person_id: string;
 
-  @ManyToOne(() => Costumer, costumer => costumer.orderService, { eager: true })
-  @JoinColumn({ name: 'costumer_id' })
-  costumer: Costumer;
+  @ManyToOne(() => Person, person => person.orderService, { eager: true })
+  @JoinColumn({ name: 'person_id' })
+  person: Person;
 
   @CreateDateColumn()
   created_at: Date;

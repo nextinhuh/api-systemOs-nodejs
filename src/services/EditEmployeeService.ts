@@ -22,7 +22,6 @@ interface ResponseData {
   email: string;
   sector: string;
   position: string;
-  password: string;
   login: string;
 }
 
@@ -64,7 +63,6 @@ class CreateUserService {
         email: saveEmployee.email,
         sector: saveEmployee.employee.sector,
         position: saveEmployee.employee.position,
-        password: saveEmployee.user.password,
         login: saveEmployee.user.login,
       };
 

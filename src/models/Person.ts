@@ -6,11 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import Employee from './Employee';
 import Costumer from './Costumer';
 import User from './User';
+import OrderService from './OrderService';
 
 @Entity('persons')
 class Persons {
@@ -31,6 +33,9 @@ class Persons {
 
   @OneToOne(() => User, user => user.person, { eager: true })
   user: User;
+
+  @OneToMany(() => OrderService, orderService => orderService.person)
+  orderService: OrderService;
 
   @CreateDateColumn()
   created_at: Date;

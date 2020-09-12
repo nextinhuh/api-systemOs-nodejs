@@ -18,7 +18,6 @@ interface ResponseData {
   name: string;
   email: string;
   sector: string;
-  password: string;
   login: string;
 }
 
@@ -58,17 +57,12 @@ class CreateUserService {
         name: saveCostumer.name,
         email: saveCostumer.email,
         sector: saveCostumer.costumer.sector,
-        password: saveCostumer.user.password,
         login: saveCostumer.user.login,
       };
 
       return costumerEdited;
     }
     throw new AppError('Any error ocurred, please try again.');
-
-    /* if (checkUserExist) {
-      throw new AppError('Email address or name, already used.');
-    } */
   }
 }
 
